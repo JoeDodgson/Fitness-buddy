@@ -17,7 +17,7 @@ UI/UX:
   - views/*
 
 automation:
-  - workflows/**/*.yml
+  - workflows/*
 
 npm packages:
   - src/package.json
