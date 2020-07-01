@@ -3,7 +3,7 @@ documentation:
   - any: ["README.md", "docs/*"]
 
 template views:
-  - views/*
+  - any: ["views/*", "views/**/*"]
 
 config:
   - config/*
@@ -12,10 +12,10 @@ db:
   - db/*
 
 UI/UX:
-  - any: ["/**/*.css", "views/**/*"]
+  - any: ["src/**/*.css", "views/**/*"]
 
 automation:
   - .github/**/*.yml
 
 npm packages:
-  - any: ["package.json", "package-lock.json"]
+  - any: ["src/package.json", "src/package-lock.json"]
