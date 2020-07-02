@@ -21,4 +21,4 @@ jobs:
       - name: Prettify code
         uses: creyD/prettier_action@v2.2
         with:
-          prettier_options: --single-quote
+          prettier_options: --write --single-quote
