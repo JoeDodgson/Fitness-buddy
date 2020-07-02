@@ -20,3 +20,6 @@ jobs:
 
       - name: Prettify code
         uses: creyD/prettier_action@v2.2
+        with:
+          # Specifying prettier options to match lint
+          - prettier_options: --single-quote

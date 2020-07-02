@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["camelcase", "eqeqeq", "resave", "unhashed"],
+  "cSpell.words": ["camelcase", "crey", "eqeqeq", "resave", "unhashed"],
   "prettier.singleQuote": true,
   "prettier.trailingComma": "none",
   "editor.formatOnSave": true
