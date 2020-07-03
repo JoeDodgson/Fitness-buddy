@@ -42,14 +42,11 @@ const devOptions = {
   password: dbPass,
   database: dbTitle
 };
-console.log(prodOptions);
 
 // Connecting to connection store
 const mysqlStore = new MySQLStore(prodOptions || devOptions);
-// const sequelize = config.use_env_variable
-//   ? new Sequelize(process.env[config.use_env_variable])
-//   : new Sequelize(config.database, config.username, config.password, config);
 
+// Compiling models
 fs.readdirSync(__dirname)
   .filter(file => {
     return (
