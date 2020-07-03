@@ -7,7 +7,7 @@ const passport = require('./config/passport');
 // Setting up port and requiring models for syncing
 const db = require('./models');
 const PORT = process.env.PORT || 8080;
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const MySQLStore = require('express-mysql-session')(session);
 
 // Creating express app and configuring middleware needed for authentication
 const app = express();
@@ -19,7 +19,7 @@ app.use(express.static('public'));
 app.use(
   session({
     secret: 'keyboard cat',
-    store: new SequelizeStore({ db: db.sequelize }),
+    store: new MySQLStore(process.env.JAWSDB_URL),
     resave: false,
     saveUninitialized: true
   })
