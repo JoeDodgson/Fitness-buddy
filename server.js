@@ -1,6 +1,6 @@
 // Requiring necessary npm packages
 const express = require('express');
-// const session = require('express-session');
+const session = require('express-session');
 // Requiring passport as we've configured it
 const passport = require('./config/passport');
 
@@ -16,16 +16,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 // We need to use sessions to keep track of our user's login status
-// app.use(
-//   session({
-//     secret: 'keyboard cat',
-//     store: new MySQLStore(process.env.JAWSDB_URL),
-//     resave: false,
-//     saveUninitialized: true
-//   })
-// );
+
+app.use(
+  session({
+    secret: 'keyboard cat',
+    store: db.mysqlStore,
+    resave: false,
+    saveUninitialized: true
+  })
+);
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.session());
 
 // Requiring our routes
 require('./routes/html-routes.js')(app);

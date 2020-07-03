@@ -4,6 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(module.filename);
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+
 // const env = process.env.NODE_ENV || 'development';
 // const config = require(path.join(__dirname, '/../config/config.json'))[env];
 const db = {};
@@ -27,22 +30,38 @@ const sequelize = new Sequelize(dbJawsUrl || dbTitle, dbUser, dbPass, {
   dialect: 'mysql'
 });
 
+// Requiring in function for converting JAWSDB_URL
+const uriToObject = require('../lib/uriToObject');
+
+// setting options depending on environment
+const prodOptions = dbJawsUrl ? uriToObject(dbJawsUrl) : undefined;
+const devOptions = {
+  host: dbHost,
+  port: 3306,
+  user: dbUser,
+  password: dbPass,
+  database: dbTitle
+};
+console.log(prodOptions);
+
+// Connecting to connection store
+const mysqlStore = new MySQLStore(prodOptions || devOptions);
 // const sequelize = config.use_env_variable
 //   ? new Sequelize(process.env[config.use_env_variable])
 //   : new Sequelize(config.database, config.username, config.password, config);
 
 fs.readdirSync(__dirname)
-  .filter((file) => {
+  .filter(file => {
     return (
       file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
     );
   })
-  .forEach((file) => {
+  .forEach(file => {
     var model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });
 
-Object.keys(db).forEach((modelName) => {
+Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
@@ -50,5 +69,6 @@ Object.keys(db).forEach((modelName) => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.mysqlStore = mysqlStore;
 
 module.exports = db;
