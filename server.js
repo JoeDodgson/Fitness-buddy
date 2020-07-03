@@ -21,7 +21,7 @@ app.use(
     secret: 'keyboard cat',
     store: new SequelizeStore({ db: db.sequelize }),
     resave: false,
-    proxy: true
+    saveUninitialized: true
   })
 );
 app.use(passport.initialize());
