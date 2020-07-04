@@ -21,29 +21,30 @@ const {
   DB_USER: dbUser,
   DB_PASS: dbPass,
   DB_HOST: dbHost
-  // JAWSDB_URL: dbJawsUrl
 } = process.env;
 
+// Setting options for db connections
 const options = {
   host: dbHost,
   port: 3306,
   user: dbUser,
   password: dbPass,
-  database: dbTitle
+  database: dbTitle,
+  // Whether or not to automatically check for and clear expired sessions:
+  clearExpired: true,
+  // How frequently expired sessions will be cleared; milliseconds:
+  checkExpirationInterval: 900000,
+  // The maximum age of a valid session; milliseconds:
+  expiration: 86400000
 };
 
 // Starting sequelize connection with env variables
-const sequelize = new Sequelize(/* dbJawsUrl ||  */ dbTitle, dbUser, dbPass, {
+const sequelize = new Sequelize(dbTitle, dbUser, dbPass, {
   host: dbHost,
   dialect: 'mysql'
 });
 
-// Requiring in function for converting JAWSDB_URL
-// const uriToObject = require('../lib/uriToObject');
-
-// setting options depending on environment
-// const prodOptions = dbJawsUrl ? uriToObject(dbJawsUrl) : undefined;
-// Connecting to connection store
+// Starting session storage
 const mysqlStore = new MySQLStore(options);
 
 // Compiling models
