@@ -42,7 +42,7 @@ const devOptions = {
   password: dbPass,
   database: dbTitle
 };
-
+console.log(prodOptions);
 // Connecting to connection store
 const mysqlStore = new MySQLStore(prodOptions || devOptions);
 
