@@ -20,31 +20,31 @@ const {
   DB: dbTitle,
   DB_USER: dbUser,
   DB_PASS: dbPass,
-  DB_HOST: dbHost,
-  JAWSDB_URL: dbJawsUrl
+  DB_HOST: dbHost
+  // JAWSDB_URL: dbJawsUrl
 } = process.env;
 
-// Starting sequelize connection with env variables
-const sequelize = new Sequelize(dbJawsUrl || dbTitle, dbUser, dbPass, {
-  host: dbHost,
-  dialect: 'mysql'
-});
-
-// Requiring in function for converting JAWSDB_URL
-const uriToObject = require('../lib/uriToObject');
-
-// setting options depending on environment
-const prodOptions = dbJawsUrl ? uriToObject(dbJawsUrl) : undefined;
-const devOptions = {
+const options = {
   host: dbHost,
   port: 3306,
   user: dbUser,
   password: dbPass,
   database: dbTitle
 };
-console.log(prodOptions);
+
+// Starting sequelize connection with env variables
+const sequelize = new Sequelize(/* dbJawsUrl ||  */ dbTitle, dbUser, dbPass, {
+  host: dbHost,
+  dialect: 'mysql'
+});
+
+// Requiring in function for converting JAWSDB_URL
+// const uriToObject = require('../lib/uriToObject');
+
+// setting options depending on environment
+// const prodOptions = dbJawsUrl ? uriToObject(dbJawsUrl) : undefined;
 // Connecting to connection store
-const mysqlStore = new MySQLStore(prodOptions || devOptions);
+const mysqlStore = new MySQLStore(options);
 
 // Compiling models
 fs.readdirSync(__dirname)
