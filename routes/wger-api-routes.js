@@ -4,7 +4,6 @@ module.exports = {
   getAllExercises: async () => {
     try {
       const { data } = await axios.get(
-
         'https://wger.de/api/v2/exercise/?format=json&status=2&language=2&limit=1000'
       );
       return data;
