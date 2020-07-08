@@ -47,7 +47,7 @@ module.exports = {
         if (name.search(queryStr) !== -1) returnArr.push({ id, name });
       });
 
-      if (returnArr.length !== 0) throw new Error('404: No Results found');
+      if (returnArr.length === 0) throw new Error('404: No Results found');
       return returnArr;
     } catch (err) {
       console.error(`ERROR - wger-api-routes.js - getExerciseByName(): ${err}`);
