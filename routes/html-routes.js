@@ -53,12 +53,32 @@ module.exports = app => {
 
   // Results page
   app.get('/search/results', isAuthenticated, async (req, res) => {
-    // Set some dummy results data and feed that into the renderer
+    // Get results data and feed that into the renderer
     const { exerciseName } = req.query;
-    data.results = await wger.getExerciseByName(exerciseName);
+    const { id } = req.user;
+    try {
+      // Function will check the DB for favourites and passes the data for pug
+      const resultsArr = await wger.getExerciseByName(exerciseName);
+      const faveExerciseArr = await db.FaveExercise.findAll({
+        where: {
+          UserId: id
+        }
+      });
+      const faveIdArr = [];
+      faveExerciseArr.forEach(({ dataValues }) => {
+        faveIdArr.push(dataValues.exercise_id);
+      });
 
-    // Pass the exercise results data into the render function
-    res.render('results', data);
+      resultsArr.forEach(obj => {
+        const { id } = obj;
+        obj.favourite = faveIdArr.indexOf(id) !== -1;
+      });
+      data.results = resultsArr;
+      // Pass the exercise results data into the render function
+      res.render('results', data);
+    } catch (err) {
+      console.error(`ERROR - html-routes.js - .get('/search/results'): ${err}`);
+    }
   });
 
   // Exercise details page
