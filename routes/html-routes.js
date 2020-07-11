@@ -7,7 +7,7 @@ const wger = require('./wger-api-routes');
 const db = require('../models');
 
 // Declaring the data object to be used by pug
-const data = {};
+let data = {};
 
 module.exports = app => {
   // Root page
@@ -82,18 +82,20 @@ module.exports = app => {
   });
 
   // Exercise details page
-  app.get('/exercises/:id', isAuthenticated, (req, res) => {
+  app.get('/exercises/:id', isAuthenticated, async (req, res) => {
     // Use the ID of the exercise that the user selected to query the database
+    const { id } = req.params;
+    const { name, description } = await wger.getExerciseById(id);
+    const { results } = await wger.getPicById(id);
+    const { image } = results[0];
 
-    // Set some dummy exercise data and feed that into the renderer
-    data.name = 'Dumbbell curls';
-    data.description =
-      'Lorem ipsum dolor sit amet, adolescens concludaturque mei ut, at eos populo accusam. Pri in illud accusata interpretaris, mel illud consul interpretaris ne.';
-    data.image =
-      'https://www.kindpng.com/picc/m/753-7538793_standing-dumbbell-curl-dumbell-curl-hd-png-download.png';
-    data.video = 'https://www.youtube.com/embed/xxgxVU1NsNc';
-    data.favourite = true;
-    // Pass the exercise details data into the render function
+    data = {
+      name,
+      description,
+      image,
+      favourite: true /* to be edited to check faveExercises table */
+    };
+    // Functionality already written in pug to take in an iFrame (YouTube vid)
     res.render('exerciseDetails', data);
   });
 
