@@ -66,13 +66,13 @@ module.exports = app => {
   app.post('/api/fave-exercise/:id', async (req, res) => {
     const { id: exerciseId } = req.params;
     const { id } = req.user;
-    console.log(id);
 
     try {
       await db.FaveExercise.create({
         exercise_id: exerciseId,
         UserId: id
       });
+      res.sendStatus(200);
     } catch (err) {
       console.error(
         `ERROR - api-routes.js - .post('/api/fave-exercise'): ${err}`
@@ -84,7 +84,6 @@ module.exports = app => {
   app.delete('/api/fave-exercise/:id', async (req, res) => {
     const { id: exerciseId } = req.params;
     const { id } = req.user;
-    console.log(id);
 
     try {
       await db.FaveExercise.destroy({
@@ -93,6 +92,7 @@ module.exports = app => {
           UserId: id
         }
       });
+      res.sendStatus(200);
     } catch (err) {
       console.error(
         `ERROR - api-routes.js - .post('/api/fave-exercise'): ${err}`
