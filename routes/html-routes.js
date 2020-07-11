@@ -82,18 +82,35 @@ module.exports = app => {
   });
 
   // Exercise details page
-  app.get('/exercises/:id', isAuthenticated, async (req, res) => {
+  app.get('/exercises/:exerciseId', isAuthenticated, async (req, res) => {
+    let { exerciseId } = req.params;
+    exerciseId = parseInt(exerciseId);
     // Use the ID of the exercise that the user selected to query the database
-    const { id } = req.params;
-    const { name, description } = await wger.getExerciseById(id);
-    const { results } = await wger.getPicById(id);
+    const { id } = req.user;
+    const { name, description } = await wger.getExerciseById(exerciseId);
+    const { results } = await wger.getPicById(exerciseId);
     const { image } = results[0];
+
+    const faveExerciseArr = await db.FaveExercise.findAll({
+      where: {
+        UserId: id
+      }
+    });
+    let favourite;
+    for (const i in faveExerciseArr) {
+      const { dataValues } = faveExerciseArr[i];
+      const { exercise_id: faveExerciseId } = dataValues;
+      if (faveExerciseId === exerciseId) {
+        favourite = true;
+        break;
+      }
+    }
 
     data = {
       name,
       description,
       image,
-      favourite: true /* to be edited to check faveExercises table */
+      favourite
     };
     // Functionality already written in pug to take in an iFrame (YouTube vid)
     res.render('exerciseDetails', data);
