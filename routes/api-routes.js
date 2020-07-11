@@ -2,7 +2,7 @@
 const db = require('../models');
 const passport = require('../config/passport');
 
-module.exports = (app) => {
+module.exports = app => {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
@@ -60,6 +60,44 @@ module.exports = (app) => {
         email: email,
         id: id
       });
+    }
+  });
+
+  app.post('/api/fave-exercise/:id', async (req, res) => {
+    const { id: exerciseId } = req.params;
+    const { id } = req.user;
+    console.log(id);
+
+    try {
+      await db.FaveExercise.create({
+        exercise_id: exerciseId,
+        UserId: id
+      });
+    } catch (err) {
+      console.error(
+        `ERROR - api-routes.js - .post('/api/fave-exercise'): ${err}`
+      );
+      res.status(401).json(err);
+    }
+  });
+
+  app.delete('/api/fave-exercise/:id', async (req, res) => {
+    const { id: exerciseId } = req.params;
+    const { id } = req.user;
+    console.log(id);
+
+    try {
+      await db.FaveExercise.destroy({
+        where: {
+          exercise_id: exerciseId,
+          UserId: id
+        }
+      });
+    } catch (err) {
+      console.error(
+        `ERROR - api-routes.js - .post('/api/fave-exercise'): ${err}`
+      );
+      res.status(401).json(err);
     }
   });
 };
