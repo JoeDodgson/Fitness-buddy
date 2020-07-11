@@ -110,7 +110,8 @@ module.exports = app => {
       name,
       description,
       image,
-      favourite
+      favourite,
+      exerciseId
     };
     // Functionality already written in pug to take in an iFrame (YouTube vid)
     res.render('exerciseDetails', data);
