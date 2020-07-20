@@ -137,6 +137,7 @@ module.exports = app => {
           UserId: req.user.id
         }
       });
+      console.log(faveExerciseArr);
       // Creating an array of favourite IDs from the user table
       const exercisesIdArr = [];
       faveExerciseArr.forEach(({ dataValues }) => {
