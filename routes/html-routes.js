@@ -87,34 +87,38 @@ module.exports = app => {
     exerciseId = parseInt(exerciseId);
     // Use the ID of the exercise that the user selected to query the database
     const { id } = req.user;
-    const { name, description } = await wger.getExerciseById(exerciseId);
-    const { results } = await wger.getPicById(exerciseId);
-    const { image } = results[0];
+    try {
+      const { name, description } = await wger.getExerciseById(exerciseId);
+      const { results } = await wger.getPicById(exerciseId);
+      const { image } = results[0];
 
-    const faveExerciseArr = await db.FaveExercise.findAll({
-      where: {
-        UserId: id
+      const faveExerciseArr = await db.FaveExercise.findAll({
+        where: {
+          UserId: id
+        }
+      });
+      let favourite;
+      for (const i in faveExerciseArr) {
+        const { dataValues } = faveExerciseArr[i];
+        const { exercise_id: faveExerciseId } = dataValues;
+        if (faveExerciseId === exerciseId) {
+          favourite = true;
+          break;
+        }
       }
-    });
-    let favourite;
-    for (const i in faveExerciseArr) {
-      const { dataValues } = faveExerciseArr[i];
-      const { exercise_id: faveExerciseId } = dataValues;
-      if (faveExerciseId === exerciseId) {
-        favourite = true;
-        break;
-      }
+
+      data = {
+        name,
+        description,
+        image,
+        favourite,
+        exerciseId
+      };
+      // Functionality already written in pug to take in an iFrame (YouTube vid)
+      res.render('exerciseDetails', data);
+    } catch (err) {
+      console.error(`ERROR - html-routes.js - /exercises/:exerciseId: ${err}`);
     }
-
-    data = {
-      name,
-      description,
-      image,
-      favourite,
-      exerciseId
-    };
-    // Functionality already written in pug to take in an iFrame (YouTube vid)
-    res.render('exerciseDetails', data);
   });
 
   // Favourite-exercises page
