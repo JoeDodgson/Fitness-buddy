@@ -137,7 +137,6 @@ module.exports = app => {
           UserId: req.user.id
         }
       });
-      console.log(faveExerciseArr);
       // Creating an array of favourite IDs from the user table
       const exercisesIdArr = [];
       faveExerciseArr.forEach(({ dataValues }) => {
@@ -146,7 +145,7 @@ module.exports = app => {
       });
       // Retrieve all exercises from db and push id and name into favourites
       data.favourites = [];
-      const { results: exercises } = await wger.getAllExercises();
+      const exercises = await wger.getAllExercises();
       exercises.forEach(({ id, name }) => {
         if (exercisesIdArr.indexOf(id) !== -1) {
           data.favourites.push({ id, name });
