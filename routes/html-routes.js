@@ -88,15 +88,20 @@ module.exports = app => {
     // Use the ID of the exercise that the user selected to query the database
     const { id } = req.user;
     try {
+      // Grabbing exercise details from wger
       const { name, description } = await wger.getExerciseById(exerciseId);
       const results = await wger.getPicById(exerciseId);
-      const { image } = results[0];
+      // Setting a placeholder image for if no image is found
+      const image = results.length > 0 ? results[0].image : '/img/dumbbell.png';
 
       const faveExerciseArr = await db.FaveExercise.findAll({
         where: {
           UserId: id
         }
       });
+
+      // Checking the result against the favourites to set
+      // '(Add to || Remove from) favourites' button state on page load
       let favourite;
       for (const i in faveExerciseArr) {
         const { dataValues } = faveExerciseArr[i];
