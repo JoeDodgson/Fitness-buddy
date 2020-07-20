@@ -9,7 +9,7 @@ const db = require('../models');
 // Declaring the data object to be used by pug
 let data = {};
 
-module.exports = app => {
+module.exports = (app) => {
   // Root page
   app.get('/', (req, res) => {
     const { isInitialLogin } = req.query;
@@ -69,7 +69,7 @@ module.exports = app => {
         faveIdArr.push(dataValues.exercise_id);
       });
 
-      resultsArr.forEach(obj => {
+      resultsArr.forEach((obj) => {
         const { id } = obj;
         obj.favourite = faveIdArr.indexOf(id) !== -1;
       });
