@@ -89,7 +89,7 @@ module.exports = app => {
     const { id } = req.user;
     try {
       const { name, description } = await wger.getExerciseById(exerciseId);
-      const { results } = await wger.getPicById(exerciseId);
+      const results = await wger.getPicById(exerciseId);
       const { image } = results[0];
 
       const faveExerciseArr = await db.FaveExercise.findAll({
