@@ -92,7 +92,10 @@ module.exports = (app) => {
       const { name, description } = await wger.getExerciseById(exerciseId);
       const exercisePics = await wger.getPicById(exerciseId);
       // Set a placeholder image for if no image is found
-      const image = exercisePics.results.length > 0 ? exercisePics.results[0].image : '/img/dumbbell.png';
+      const image =
+        exercisePics.results.length > 0
+          ? exercisePics.results[0].image
+          : '/img/dumbbell.png';
 
       const faveExerciseArr = await db.FaveExercise.findAll({
         where: {
