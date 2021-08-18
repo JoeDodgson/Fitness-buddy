@@ -90,9 +90,12 @@ module.exports = (app) => {
     try {
       // Grabbing exercise details from wger
       const { name, description } = await wger.getExerciseById(exerciseId);
-      const results = await wger.getPicById(exerciseId);
-      // Setting a placeholder image for if no image is found
-      const image = results.length > 0 ? results[0].image : '/img/dumbbell.png';
+      const exercisePics = await wger.getPicById(exerciseId);
+      // Set a placeholder image for if no image is found
+      const image =
+        exercisePics.results.length > 0
+          ? exercisePics.results[0].image
+          : '/img/dumbbell.png';
 
       const faveExerciseArr = await db.FaveExercise.findAll({
         where: {
@@ -154,8 +157,8 @@ module.exports = (app) => {
       });
       // Retrieve all exercises from db and push id and name into favourites
       data.favourites = [];
-      const exercises = await wger.getAllExercises();
-      exercises.forEach(({ id, name }) => {
+      const allExercises = await wger.getAllExercises();
+      allExercises.results.forEach(({ id, name }) => {
         if (exercisesIdArr.indexOf(id) !== -1) {
           data.favourites.push({ id, name });
         }
