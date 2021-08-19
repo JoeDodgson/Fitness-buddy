@@ -163,7 +163,7 @@ module.exports = (app) => {
           data.favourites.push({ id, name });
         }
       });
-      res.render('faveExercises', data);
+      res.render('favouriteExercises', data);
     } catch (err) {
       console.error(`ERROR - html-routes.js - /exercises: ${err}`);
     }
