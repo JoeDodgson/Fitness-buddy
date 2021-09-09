@@ -46,6 +46,12 @@ Follow the link below to access the deployed application:
 
 https://jdj-fitness-buddy.herokuapp.com
 
+Create a free account, search for exercises and add them to your favourites.
+
+If you don't want to create an account, you can log into our test account:
+
+Email: test@gmail.com , Password: password
+
 ## Tests
 
 Tests conducted to ensure good functionality of server connection and database, sequelize ORM, authentication, pug.js module, third party API and Heroku deployment.
