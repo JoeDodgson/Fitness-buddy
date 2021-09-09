@@ -40,14 +40,13 @@ module.exports = {
     );
     const returnArr = [];
     try {
-      const results = await this.getAllExercises();
+      const allExercises = await this.getAllExercises();
 
       // Looping through the results array and pushing matches to returnArr
-      results.forEach(({ id, name }) => {
+      allExercises.results.forEach(({ id, name }) => {
         if (name.search(queryStr) !== -1) returnArr.push({ id, name });
       });
 
-      if (returnArr.length === 0) throw new Error('404: No Results found');
       return returnArr;
     } catch (err) {
       console.error(`ERROR - wger-api-routes.js - getExerciseByName(): ${err}`);
