@@ -1,22 +1,27 @@
 // Event listener for adding / removing a specific exercise from favourites
-const favouriteBtn = $('.favourites-button');
+const star = $('h3>.fa-star');
 
-favouriteBtn.on('click', async event => {
+star.on('click', async event => {
   event.preventDefault();
-  const id = $(event.target).attr('data-id');
+  const id = $(event.target)
+    .parent()
+    .attr('data-id');
 
-  // When user clicks either the Add to favourites or Remove from favourites button (they both have .favourites-button class)
-  // then a request is sent to the API and both buttons are toggled between hidden and visible
+  // When user clicks the star, add or remove exercise from favourites
   try {
-    if ($(event.target).attr('id') === 'remove-from-favourites') {
+    // If the star was filled ('fa' class), then delete it from the user's favourite exercises
+    if ($(event.target).attr('class') === 'fa fa-star large-star') {
       await $.ajax({ url: `/api/fave-exercise/${id}`, type: 'DELETE' });
-      // Display message telling user their exercise was removed
+      // Change star styling from filled to unfilled
+      $(event.target).attr('class', 'far fa-star large-star');
+
+    // If the star was unfilled ('far' class), then add it to the user's favourite exercises
     } else {
       await $.post(`/api/fave-exercise/${id}`);
-      // Display message telling user their exercise was added
+      // Change star styling from unfilled to filled
+      $(event.target).attr('class', 'fa fa-star large-star');
     }
-    favouriteBtn.toggle();
   } catch (err) {
-    console.error(`ERROR - results.js - favouriteBtn.on('click'): ${err}`);
+    console.error(`ERROR - results.js - star.on('click'): ${err}`);
   }
 });

@@ -14,18 +14,16 @@ html(lang="en")
             br
             br
             | !{description}
-            br
             - videoLink = video
                 unless videoLink == null
                     iframe(width="90%" height="315" src= videoLink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-            br
             - const favouriteBool = favourite
                 if favouriteBool === true
-                    button#add-to-favourites.favourites-button(style="display: none;" data-id= exerciseId) Add to favourites
-                    button#remove-from-favourites.favourites-button(data-id= exerciseId) Remove from favourites
+                    h3(data-id= exerciseId)
+                        i.fa.fa-star.large-star
                 else
-                    button#add-to-favourites.favourites-button(data-id= exerciseId) Add to favourites
-                    button#remove-from-favourites.favourites-button(style="display: none;" data-id= exerciseId) Remove from favourites
+                    h3(data-id= exerciseId)
+                        i.far.fa-star.large-star
         script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js")
         script(type="text/javascript" src="/js/exerciseDetails.js")
     include footer
