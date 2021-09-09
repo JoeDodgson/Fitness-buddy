@@ -23,9 +23,11 @@ html(lang="en")
                             h3(data-id= item.id)
                                 - favouriteBool = item.favourite
                                     if favouriteBool === true
-                                        i.fa.fa-star
+                                        i.tooltip.fa.fa-star
+                                            span.tooltip-text Remove from favourites
                                     else
-                                        i.far.fa-star
+                                        i.tooltip.far.fa-star
+                                            span.tooltip-text Add to favourites
         br
         script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js")
         script(type="text/javascript" src="/js/results.js")
