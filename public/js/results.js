@@ -6,19 +6,23 @@ star.on('click', async event => {
   const id = $(event.target)
     .parent()
     .attr('data-id');
-
+  const tooltipText = $(event.target).children('span.tooltip-text');
   try {
-    // If the star was filled ('fa' class), then delete it from the user's favourite exercises 
-    if ($(event.target).attr('class') === 'fa fa-star') {
+    if ($(event.target).hasClass('fa')) {
       await $.ajax({ url: `/api/fave-exercise/${id}`, type: 'DELETE' });
       // Change star styling from filled to unfilled
-      $(event.target).attr('class', 'far fa-star');
-
-    // If the star was unfilled ('far' class), then add it to the user's favourite exercises
+      $(event.target).removeClass('fa');
+      $(event.target).addClass('far');
+      // Change tooltip text
+      tooltipText.text('Add to favourites');
+      // If the star was unfilled ('far' class), then add it to the user's favourite exercises
     } else {
       await $.post(`/api/fave-exercise/${id}`);
       // Change star styling from unfilled to filled
-      $(event.target).attr('class', 'fa fa-star');
+      $(event.target).removeClass('far');
+      $(event.target).addClass('fa');
+      // Change tooltip text
+      tooltipText.text('Remove from favourites');
     }
   } catch (err) {
     console.error(`ERROR - results.js - star.on('click'): ${err}`);

@@ -424,3 +424,31 @@ li {
 #privacy-policy-text ul li {
   justify-content: unset;
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  // width: 150px;
+  background-color: @black;
+  color: @white;
+  text-align: center;
+  font-family: @roboto;
+  font-size: 18px;
+  font-weight: 900;
+  border-radius: 10px;
+  padding: 5px;
+
+  /* Position the tooltip */
+  position: absolute;
+  left: 105%;
+  top: Calc(50% - 24px);
+  z-index: 1;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
