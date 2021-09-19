@@ -46,6 +46,12 @@ Follow the link below to access the deployed application:
 
 https://jdj-fitness-buddy.herokuapp.com
 
+Either sign up or use the demo login details:
+
+Email: test@gmail.com
+
+Password: password
+
 ## Tests
 
 Tests conducted to ensure good functionality of server connection and database, sequelize ORM, authentication, pug.js module, third party API and Heroku deployment.
